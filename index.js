@@ -11,6 +11,7 @@ const mongoose = require('mongoose');
 const Product = require('./models/product.model');
 
 const productRoutes = require('./routes/product.route');
+const userRoutes = require('./routes/user.route');
 
 mongoose.set('useCreateIndex', true);
 mongoose.connect('mongodb://localhost:27017/bai1_lab1', {
@@ -52,6 +53,7 @@ app.use(express.urlencoded({ extended: true }));
 
 
 app.use('/products', productRoutes);
+app.use('/users', userRoutes);
 
 module.exports = app;
 

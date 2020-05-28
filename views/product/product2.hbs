@@ -1,0 +1,63 @@
+<h4>Danh sách sản phẩm</h4>
+<a type="button" class="btn btn-primary mb-3" href="/products/create">Create New</a>
+
+<div class="row">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th scope="col-md">STT</th>
+                <th scope="col-md">Sản phẩm</th>
+                <th scope="col-md">Giá</th>
+                <th scope="col-md">Tình trạng</th>
+                <th scope="col-md">Thao tác</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{# each products }}
+            {{# each this }}
+            <tr>
+                <td>
+                    <div class="id">
+                        {{this.ID}}
+                    </div>
+                </td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <img src="/{{this.image}}" alt="product_image">
+                        <div class="ml-2">
+                            <p class="h5 product-name">{{this.name}}</p>
+                            <p>{{ this.description }}</p>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="price">
+                        {{this.price}}
+                    </div>
+                </td>
+                <td>
+                    {{#if this.amount}}
+                    <div class="status">
+                        <p>Còn hàng</p>
+                        <p>({{this.amount}})</p>
+                    </div>
+                    {{else}}
+                    <div class="status">
+                        <p class="oos_status">Hết hàng</p>
+                        <p>({{this.amount}})</p>
+                    </div>
+                    {{/if}}
+                </td>
+                <td>
+                    <div class="action d-flex justify-content-center align-items-center">
+                        <a href="/products/edit/{{this._id}}" class="btn btn-primary mr-1">Edit</a>
+                        <a href="{{this._id}}" class="btn btn-outline-primary mr-1">Details</a>
+                        <a href="#" class="btn btn-danger">Delete</a>
+                    </div> 
+                </td>   
+            </tr>
+            {{/each}}
+            {{/each}}
+        </tbody>
+    </table>
+</div>

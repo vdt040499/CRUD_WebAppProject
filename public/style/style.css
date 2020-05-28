@@ -2,6 +2,7 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+    font-size: 10px;
 }
 h4{
     margin-top: 10px;
@@ -38,4 +39,22 @@ p {
 
 .price, .status{
     font-weight: bold;
+}
+
+.action{
+    height: 50px;
+}
+
+.detail{
+    height: 500px;
+}
+
+.detail-image{
+    height: 100px;
+    width: 100px;
+    object-fit: contain;
+}
+
+.product-infor{
+    line-height: 20px;
 }

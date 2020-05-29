@@ -1,17 +1,11 @@
 <h4>Cập nhật sản phẩm</h4>
 <h6>Products</h6>
 {{#if product}}
-<form class="needs-validation" novalidate>
+<form action="/products/edit/{{product._id}}" class="needs-validation" method="PUT" novalidate>
     <div class="col-md row">
         <label class="col-sm-2 col-form-label" for="validationCustom01">Id</label>
         <div class="col-sm-10">
             <input type="text" name="id" class="form-control" id="validationCustom01" value={{product.ID}} required>
-        </div>
-        <div class="valid-feedback">
-            Tốt
-        </div>
-        <div class="invalid-feedback">
-            Xin nhập id sản phẩm
         </div>
     </div>
     <div class="col-md row">
@@ -19,23 +13,11 @@
         <div class="col-sm-10">
             <input type="text" name="name" class="form-control" id="validationCustom02" value={{product.name}} required>
         </div>
-        <div class="valid-feedback">
-            Tốt
-        </div>
-        <div class="invalid-feedback">
-            Xin nhập tên sản phẩm
-        </div>
     </div>
     <div class="col-md row">
         <label class="col-sm-2 col-form-label" for="validationCustom03">Summary:</label>
         <div class="col-sm-10">
             <input type="text" name="description" class="form-control" id="validationCustom03" value={{product.description}} required>
-        </div>
-        <div class="valid-feedback">
-            Tốt
-        </div>
-        <div class="invalid-feedback">
-            Xin nhập mô tả sản phẩm
         </div>
     </div>
 
@@ -44,21 +26,12 @@
         <div class="col-sm-10">
             <input type="text" name="image" class="form-control" id="validationCustom04" value={{product.image}}>
         </div>
-        <div class="invalid-feedback">
-            Xin chọn 1 hình
-        </div>
     </div>
 
     <div class="col-md row">
         <label class="col-sm-2 col-form-label" for="validationCustom05">Price :</label>
         <div class="col-sm-10">
             <input type="number" name="price" class="form-control" id="validationCustom05" value={{product.price}} required>
-        </div>
-        <div class="valid-feedback">
-            Tốt
-        </div>
-        <div class="invalid-feedback">
-            Xin nhập giá sản phẩm
         </div>
     </div>
 
@@ -68,33 +41,6 @@
             <input type="number" name="amount" class="form-control" id="validationCustom06" value={{product.amount}} required>
             <button style="margin-top: 20px; text-align: center;" class="btn btn-primary" type="submit">Submit</button>
         </div>
-        <div class="valid-feedback">
-            Tốt
-        </div>
-        <div class="invalid-feedback">
-            Xin nhập số lượng sản phẩm
-        </div>
     </div>
 </form>
-
-<script>
-    // Example starter JavaScript for disabling form submissions if there are invalid fields
-    (function () {
-        'use strict';
-        window.addEventListener('load', function () {
-            // Fetch all the forms we want to apply custom Bootstrap validation styles to
-            var forms = document.getElementsByClassName('needs-validation');
-            // Loop over them and prevent submission
-            var validation = Array.prototype.filter.call(forms, function (form) {
-                form.addEventListener('submit', function (event) {
-                    if (form.checkValidity() === false) {
-                        event.preventDefault();
-                        event.stopPropagation();
-                    }
-                    form.classList.add('was-validated');
-                }, false);
-            });
-        }, false);
-    })();
-</script>
 {{/if}}

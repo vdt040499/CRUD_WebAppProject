@@ -1,43 +1,45 @@
 const Product = require('../models/product.model');
 
 module.exports.getProducts = async(req, res) => {
-    const products = await Product.find();
+    var products = await Product.find();
     products.sort((a, b) => {
         return a.ID - b.ID;
     });
-    const formater = new Intl.NumberFormat('vi-VN', {
-        style: 'currency',
-        currency: 'VND',
-        minimumFractionDigits: 0
-    })
-    for(let i = 0; i < products.length; i++){
-        (products[i].price) = formater.format(products[i].price); 
-    }
+    var newProducts = products.map(product => ({
+        ID: product.ID,
+        name: product.name,
+        price: product.price.toLocaleString('vi', {style : 'currency', currency : 'VND'}),
+        brand: product.brand,
+        amount: product.amount,
+        description: product.description,
+        image: product.image
+    }));
     var productChunks = [];
     var chunkSize = 3;
-    for (var i = 0; i < products.length; i += chunkSize) {
-        productChunks.push(products.slice(i, i + chunkSize));
+    for (let i = 0; i < newProducts.length; i += chunkSize) {
+        productChunks.push(newProducts.slice(i, i + chunkSize));
     }
     res.render('product/product', { products: productChunks });
 }
 
 module.exports.getProducts2 = async(req, res) => {
-    const products = await Product.find();
+    var products = await Product.find();
     products.sort((a, b) => {
         return a.ID - b.ID;
     });
-    const formater = new Intl.NumberFormat('vi-VN', {
-        style: 'currency',
-        currency: 'VND',
-        minimumFractionDigits: 0
-    })
-    for(let i = 0; i < products.length; i++){
-        (products[i].price) = formater.format(products[i].price); 
-    }
+    var newProducts = products.map(product => ({
+        ID: product.ID,
+        name: product.name,
+        price: product.price.toLocaleString('vi', {style : 'currency', currency : 'VND'}),
+        brand: product.brand,
+        amount: product.amount,
+        description: product.description,
+        image: product.image
+    }));
     var productChunks = [];
     var chunkSize = 3;
-    for (var i = 0; i < products.length; i += chunkSize) {
-        productChunks.push(products.slice(i, i + chunkSize));
+    for (let i = 0; i < newProducts.length; i += chunkSize) {
+        productChunks.push(newProducts.slice(i, i + chunkSize));
     }
     res.render('product/product2', { products: productChunks });    
 }

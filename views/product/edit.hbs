@@ -1,5 +1,13 @@
 <h4>Cập nhật sản phẩm</h4>
 <h6>Products</h6>
+
+{{#each errors}}
+<div class="alert alert-danger alert-dismissible">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>{{this}}</strong>
+</div>
+{{/each}}
+
 {{#if product}}
 <form action="/products/edit/{{product._id}}" class="needs-validation" method="PUT" novalidate>
     <div class="col-md row">

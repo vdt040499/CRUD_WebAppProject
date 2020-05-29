@@ -5,6 +5,14 @@ module.exports.getProducts = async(req, res) => {
     products.sort((a, b) => {
         return a.ID - b.ID;
     });
+    const formater = new Intl.NumberFormat('vi-VN', {
+        style: 'currency',
+        currency: 'VND',
+        minimumFractionDigits: 0
+    })
+    for(let i = 0; i < products.length; i++){
+        (products[i].price) = formater.format(products[i].price); 
+    }
     var productChunks = [];
     var chunkSize = 3;
     for (var i = 0; i < products.length; i += chunkSize) {
@@ -18,6 +26,14 @@ module.exports.getProducts2 = async(req, res) => {
     products.sort((a, b) => {
         return a.ID - b.ID;
     });
+    const formater = new Intl.NumberFormat('vi-VN', {
+        style: 'currency',
+        currency: 'VND',
+        minimumFractionDigits: 0
+    })
+    for(let i = 0; i < products.length; i++){
+        (products[i].price) = formater.format(products[i].price); 
+    }
     var productChunks = [];
     var chunkSize = 3;
     for (var i = 0; i < products.length; i += chunkSize) {
@@ -57,338 +73,376 @@ module.exports.edit = async(req, res) => {
     res.render('product/edit', { product: product });
 }
 
+module.exports.deleteProduct = async(req,res) => {
+    const deleteProduct = await Product.deleteOne({_id: req.params.productId});
+    console.log(deleteProduct);
+    res.redirect('/products/product2');
+}
 module.exports.editPost = async(req, res) => {
     const product = await  Product.findById(req.params.productId);
-        if (product.name === req.body.name) {
-            if (product.price === req.body.price) {
-                if (product.brand === req.body.brand) {
-                    if (product.amount === req.body.amount) {
-                        if (product.descript === req.body.descript) {
-                            return res.status(200).json({
-                                message: 'You changed nothing',
-                                product: product
-                            });
-                        } else {
-                            product.descript = req.body.descript;
-                            product.save();
-                            return res.status(200).json({
-                                message: 'You changed descript successfully',
-                                product: product
-                            });
-                        }
+    if (product.name === req.body.name) {
+        if (product.price === req.body.price) {
+            if (product.brand === req.body.brand) {
+                if (product.amount === req.body.amount) {
+                    if (product.descript === req.body.descript) {
+                        res.redirect('product/detail',
+                         { 
+                            product: product ,
+                            message: 'You changed nothing',
+                         });
                     } else {
-                        if (product.descript === req.body.descript) {
-                            product.amount = req.body.amount;
-                            product.save();
-                            return res.status(200).json({
-                                message: 'You changed amount successfully',
-                                product: product
+                        product.descript = req.body.descript;
+                        product.save();
+                        res.redirect('product/detail',
+                            {
+                                product: product,
+                                message: 'You changed descript successfully',
                             });
-                        } else {
-                            product.amount = req.body.amount;
-                            product.descript = req.body.descript;
-                            product.save();
-                            return res.status(200).json({
-                                message: 'You changed amount and descript successfully',
-                                product: product
-                            });
-                        }
                     }
                 } else {
-                    if (product.amount === req.body.amount) {
-                        if (product.descript === req.body.descript) {
-                            product.brand = req.body.brand;
-                            product.save();
-                            return res.status(200).json({
-                                message: 'You changed brand successfully',
-                                product: product
+                    if (product.descript === req.body.descript) {
+                        product.amount = req.body.amount;
+                        product.save();
+                        res.redirect('product/detail',
+                            {
+                                product: product,
+                                message: 'You changed amount successfully',
                             });
-                        } else {
-                            product.brand = req.body.brand;
-                            product.descript = req.body.descript;
-                            product.save();
-                            return res.status(200).json({
-                                message: 'You changed brand and descript successfully',
-                                product: product
-                            });
-                        }
                     } else {
-                        if (product.descript === req.body.descript) {
-                            product.brand = req.body.brand;
-                            product.amount = req.body.amount;
-                            product.save();
-                            return res.status(200).json({
-                                message: 'You changed brand and amount successfully',
-                                product: product
+                        product.amount = req.body.amount;
+                        product.descript = req.body.descript;
+                        product.save();
+                        res.redirect('product/detail',
+                            {
+                                product: product,
+                                message: 'You changed amount and descript successfully',
                             });
-                        } else {
-                            product.brand  = req.body.brand;
-                            product.amount = req.body.amount;
-                            product.descript = req.body.descript;
-                            product.save();
-                            return res.status(200).json({
-                                message: 'You changed brand, amount and descript successfully',
-                                product: product
-                            });
-                        }
                     }
                 }
             } else {
-                if (product.brand === req.body.brand) {
-                    if (product.amount === req.body.amount) {
-                        if (product.descript === req.body.descript) {
-                            product.price = req.body.price;
-                            product.save();
-                            return res.status(200).json({
-                                message: 'You changed price successfully',
-                                product: product
+                if (product.amount === req.body.amount) {
+                    if (product.descript === req.body.descript) {
+                        product.brand = req.body.brand;
+                        product.save();
+                        res.redirect('product/detail',
+                            {
+                                product: product,
+                                message: 'You changed brand successfully',
                             });
-                        } else {
-                            product.price = req.body.price;
-                            product.descript = req.body.descript;
-                            product.save();
-                            return res.status(200).json({
-                                message: 'You changed price and descript successfully',
-                                product: product
-                            });
-                        }
                     } else {
-                        if (product.descript === req.body.descript) {
-                            product.price = req.body.price;
-                            product.amount = req.body.amount;
-                            product.save();
-                            return res.status(200).json({
-                                message: 'You changed price and amount successfully',
-                                product: product
+                        product.brand = req.body.brand;
+                        product.descript = req.body.descript;
+                        product.save();
+                        res.redirect('product/detail',
+                            {
+                                product: product,
+                                message: 'You changed brand and descript successfully',
                             });
-                        } else {
-                            product.price = req.body.price;
-                            product.amount = req.body.amount;
-                            product.descript = req.body.descript;
-                            product.save();
-                            return res.status(200).json({
-                                message: 'You changed price, amount and descript successfully',
-                                product: product
-                            });
-                        }
                     }
                 } else {
-                    if (product.amount === req.body.amount) {
-                        if (product.descript === req.body.descript) {
-                            product.price = req.body.price;
-                            product.brand = req.body.brand;
-                            product.save();
-                            return res.status(200).json({
-                                message: 'You changed price and brand successfully',
-                                product: product
+                    if (product.descript === req.body.descript) {
+                        product.brand = req.body.brand;
+                        product.amount = req.body.amount;
+                        product.save();
+                        res.redirect('product/detail',
+                            {
+                                product: product,
+                                message: 'You changed brand and amount successfully',
                             });
-                        } else {
-                            product.price = req.body.price;
-                            product.brand = req.body.brand;
-                            product.descript = req.body.descript;
-                            product.save();
-                            return res.status(200).json({
-                                message: 'You changed price, brand and descript successfully',
-                                product: product
-                            });
-                        }
                     } else {
-                        if (product.descript === req.body.descript) {
-                            product.price = req.body.price;
-                            product.brand = req.body.brand;
-                            product.amount = req.body.amount;
-                            product.save();
-                            return res.status(200).json({
-                                message: 'You changed price, brand and amount successfully',
-                                product: product
+                        product.brand  = req.body.brand;
+                        product.amount = req.body.amount;
+                        product.descript = req.body.descript;
+                        product.save();
+                        res.redirect('product/detail',
+                            {
+                                product: product,
+                                message: 'You changed brand, amount and descript successfully',
                             });
-                        } else {
-                            product.price  = req.body.price;
-                            product.brand = req.body.brand;
-                            product.amount = req.body.amount;
-                            product.descript = req.body.descript;
-                            product.save();
-                            return res.status(200).json({
-                                message: 'You changed price, brand, amount and descript successfully',
-                                product: product
-                            });
-                        }
                     }
                 }
             }
         } else {
-            if (product.price === req.body.price) {
-                if (product.brand === req.body.brand) {
-                    if (product.amount === req.body.amount) {
-                        if (product.descript === req.body.descript) {
-                            product.name = req.body.name;
-                            product.save;
-                            return res.status(200).json({
-                                message: 'You changed name successfully',
-                                product: product
+            if (product.brand === req.body.brand) {
+                if (product.amount === req.body.amount) {
+                    if (product.descript === req.body.descript) {
+                        product.price = req.body.price;
+                        product.save();
+                        res.redirect('product/detail',
+                            {
+                                product: product,
+                                message: 'You changed price successfully',
                             });
-                        } else {
-                            product.name = req.body.name;
-                            product.descript = req.body.descript;
-                            product.save();
-                            return res.status(200).json({
-                                message: 'You changed name and descript successfully',
-                                product: product
-                            });
-                        }
                     } else {
-                        if (product.descript === req.body.descript) {
-                            product.name = req.body.name;
-                            product.amount = req.body.amount;
-                            product.save();
-                            return res.status(200).json({
-                                message: 'You changed name and amount successfully',
-                                product: product
+                        product.price = req.body.price;
+                        product.descript = req.body.descript;
+                        product.save();
+                        res.redirect('product/detail',
+                            {
+                                product: product,
+                                message: 'You changed price and descript successfully',
                             });
-                        } else {
-                            product.name = req.body.name;
-                            product.amount = req.body.amount;
-                            product.descript = req.body.descript;
-                            product.save();
-                            return res.status(200).json({
-                                message: 'You changed name, amount and descript successfully',
-                                product: product
-                            });
-                        }
                     }
                 } else {
-                    if (product.amount === req.body.amount) {
-                        if (product.descript === req.body.descript) {
-                            product.name = req.body.name;
-                            product.brand = req.body.brand;
-                            product.save();
-                            return res.status(200).json({
-                                message: 'You changed name and brand successfully',
-                                product: product
+                    if (product.descript === req.body.descript) {
+                        product.price = req.body.price;
+                        product.amount = req.body.amount;
+                        product.save();
+                        res.redirect('product/detail',
+                            {
+                                product: product,
+                                message: 'You changed price and amount successfully',
                             });
-                        } else {
-                            product.name = req.body.name;
-                            product.brand = req.body.brand;
-                            product.descript = req.body.descript;
-                            product.save();
-                            return res.status(200).json({
-                                message: 'You changed name, brand and descript successfully',
-                                product: product
-                            });
-                        }
                     } else {
-                        if (product.descript === req.body.descript) {
-                            product.name = req.body.name;
-                            product.brand = req.body.brand;
-                            product.amount = req.body.amount;
-                            product.save();
-                            return res.status(200).json({
-                                message: 'You changed name, brand and amount successfully',
-                                product: product
+                        product.price = req.body.price;
+                        product.amount = req.body.amount;
+                        product.descript = req.body.descript;
+                        product.save();
+                        res.redirect('product/detail',
+                            {
+                                product: product,
+                                message: 'You changed price, amount and descript successfully',
                             });
-                        } else {
-                            product.name = req.body.name;
-                            product.brand = req.body.brand;
-                            product.amount = req.body.amount;
-                            product.descript = req.body.descript;
-                            product.save();
-                            return res.status(200).json({
-                                message: 'You changed name, brand, amount and descript successfully',
-                                product: product
-                            });
-                        }
                     }
                 }
             } else {
-                if (product.brand === req.body.brand) {
-                    if (product.amount === req.body.amount) {
-                        if (product.descript === req.body.descript) {
-                            product.name = req.body.name;
-                            product.price = req.body.price;
-                            product.save();
-                            return res.status(200).json({
-                                message: 'You changed name and price successfully',
-                                product: product
+                if (product.amount === req.body.amount) {
+                    if (product.descript === req.body.descript) {
+                        product.price = req.body.price;
+                        product.brand = req.body.brand;
+                        product.save();
+                        res.redirect('product/detail',
+                            {
+                                product: product,
+                                message: 'You changed price and brand successfully',
                             });
-                        } else {
-                            product.name =req.body.name;
-                            product.price = req.body.price;
-                            product.descript = req.body.descript;
-                            product.save();
-                            return res.status(200).json({
-                                message: 'You changed name, price and descript successfully',
-                                product: product
-                            });
-                        }
                     } else {
-                        if (product.descript === req.body.descript) {
-                            product.name = req.body.name;
-                            product.price = req.body.price;
-                            product.amount = req.body.amount;
-                            product.save();
-                            return res.status(200).json({
-                                message: 'You changed name, price and amount successfully',
-                                product: product
+                        product.price = req.body.price;
+                        product.brand = req.body.brand;
+                        product.descript = req.body.descript;
+                        product.save();
+                        res.redirect('product/detail',
+                            {
+                                product: product,
+                                message: 'You changed price, brand and descript successfully',
                             });
-                        } else {
-                            product.name = req.body.name;
-                            product.price = req.body.price;
-                            product.amount = req.body.amount;
-                            product.descript = req.body.descript;
-                            product.save();
-                            return res.status(200).json({
-                                message: 'You changed name, price, amount and descript successfully',
-                                product: product
-                            });
-                        }
                     }
                 } else {
-                    if (product.amount === req.body.amount) {
-                        if (product.descript === req.body.descript) {
-                            product.name = req.body.name;
-                            product.price = req.body.price;
-                            product.brand = req.body.brand;
-                            product.save();
-                            return res.status(200).json({
-                                message: 'You changed name, price and brand successfully',
-                                product: product
+                    if (product.descript === req.body.descript) {
+                        product.price = req.body.price;
+                        product.brand = req.body.brand;
+                        product.amount = req.body.amount;
+                        product.save();
+                        res.redirect('product/detail',
+                            {
+                                product: product,
+                                message: 'You changed price, brand and amount successfully',
                             });
-                        } else {
-                            product.name = req.body.name;
-                            product.price = req.body.price;
-                            product.brand = req.body.brand;
-                            product.descript = req.body.descript;
-                            product.save();
-                            return res.status(200).json({
-                                message: 'You changed name, price, brand and descript successfully',
-                                product: product
-                            });
-                        }
                     } else {
-                        if (product.descript === req.body.descript) {
-                            product.name =  req.body.name;
-                            product.price = req.body.price;
-                            product.brand = req.body.brand;
-                            product.amount = req.body.amount;
-                            product.save();
-                            return res.status(200).json({
-                                message: 'You changed name, price, brand and amount successfully',
-                                product: product
-                            });
-                        } else {
-                            product.name = req.body.name;
-                            product.price = req.body.price;
-                            product.brand = req.body.brand;
-                            product.amount = req.body.amount;
-                            product.descript = req.body.descript;
-                            product.save();
-                            return res.status(200).json({
+                        product.price  = req.body.price;
+                        product.brand = req.body.brand;
+                        product.amount = req.body.amount;
+                        product.descript = req.body.descript;
+                        product.save();
+                        res.redirect('product/detail',
+                            {
+                                product: product,
                                 message: 'You changed price, brand, amount and descript successfully',
-                                product: product
                             });
-                        }
                     }
                 }
             }
         }
+    } else {
+        if (product.price === req.body.price) {
+            if (product.brand === req.body.brand) {
+                if (product.amount === req.body.amount) {
+                    if (product.descript === req.body.descript) {
+                        product.name = req.body.name;
+                        product.save;
+                        res.redirect('product/detail',
+                            {
+                                product: product,
+                                message: 'You changed name successfully',
+                            });
+                    } else {
+                        product.name = req.body.name;
+                        product.descript = req.body.descript;
+                        product.save();
+                        res.redirect('product/detail',
+                            {
+                                product: product,
+                                message: 'You changed name and descript successfully',
+                            });
+                    }
+                } else {
+                    if (product.descript === req.body.descript) {
+                        product.name = req.body.name;
+                        product.amount = req.body.amount;
+                        product.save();
+                        res.redirect('product/detail',
+                            {
+                                product: product,
+                                message: 'You changed name and amount successfully',
+                            });
+                    } else {
+                        product.name = req.body.name;
+                        product.amount = req.body.amount;
+                        product.descript = req.body.descript;
+                        product.save();
+                        res.redirect('product/detail',
+                            {
+                                product: product,
+                                message: 'You changed name, amount and descript successfully',
+                            });
+                    }
+                }
+            } else {
+                if (product.amount === req.body.amount) {
+                    if (product.descript === req.body.descript) {
+                        product.name = req.body.name;
+                        product.brand = req.body.brand;
+                        product.save();
+                        res.redirect('product/detail',
+                            {
+                                product: product,
+                                message: 'You changed name and brand successfully',
+                            });
+                    } else {
+                        product.name = req.body.name;
+                        product.brand = req.body.brand;
+                        product.descript = req.body.descript;
+                        product.save();
+                        res.redirect('product/detail',
+                            {
+                                product: product,
+                                message: 'You changed name, brand and descript successfully',
+                            });
+                    }
+                } else {
+                    if (product.descript === req.body.descript) {
+                        product.name = req.body.name;
+                        product.brand = req.body.brand;
+                        product.amount = req.body.amount;
+                        product.save();
+                        res.redirect('product/detail',
+                            {
+                                product: product,
+                                message: 'You changed name, brand and amount successfully',
+                            });
+                    } else {
+                        product.name = req.body.name;
+                        product.brand = req.body.brand;
+                        product.amount = req.body.amount;
+                        product.descript = req.body.descript;
+                        product.save();
+                        res.redirect('product/detail',
+                            {
+                                product: product,
+                                message: 'You changed name, brand, amount and descript successfully',
+                            });
+                    }
+                }
+            }
+        } else {
+            if (product.brand === req.body.brand) {
+                if (product.amount === req.body.amount) {
+                    if (product.descript === req.body.descript) {
+                        product.name = req.body.name;
+                        product.price = req.body.price;
+                        product.save();
+                        res.redirect('product/detail',
+                            {
+                                product: product,
+                                message: 'You changed name and price successfully',
+                            });
+                    } else {
+                        product.name =req.body.name;
+                        product.price = req.body.price;
+                        product.descript = req.body.descript;
+                        product.save();
+                        res.redirect('product/detail',
+                            {
+                                product: product,
+                                message: 'You changed name, price and descript successfully',
+                            });
+                    }
+                } else {
+                    if (product.descript === req.body.descript) {
+                        product.name = req.body.name;
+                        product.price = req.body.price;
+                        product.amount = req.body.amount;
+                        product.save();
+                        res.redirect('product/detail',
+                            {
+                                product: product,
+                                message: 'You changed name, price and amount successfully',
+                        });
+                    } else {
+                        product.name = req.body.name;
+                        product.price = req.body.price;
+                        product.amount = req.body.amount;
+                        product.descript = req.body.descript;
+                        product.save();
+                        res.redirect('product/detail',
+                            {
+                                product: product,
+                                message: 'You changed name, price, amount and descript successfully',
+                            });
+                    }
+                }
+            } else {
+                if (product.amount === req.body.amount) {
+                    if (product.descript === req.body.descript) {
+                        product.name = req.body.name;
+                        product.price = req.body.price;
+                        product.brand = req.body.brand;
+                        product.save();
+                        res.redirect('product/detail',
+                            {
+                                product: product,
+                                message: 'You changed name, price and brand successfully',
+                            });
+                    } else {
+                        product.name = req.body.name;
+                        product.price = req.body.price;
+                        product.brand = req.body.brand;
+                        product.descript = req.body.descript;
+                        product.save();
+                        res.redirect('product/detail',
+                            {
+                                product: product,
+                                message: 'You changed name, price, brand and descript successfully',
+                            });
+                    }
+                } else {
+                    if (product.descript === req.body.descript) {
+                        product.name =  req.body.name;
+                        product.price = req.body.price;
+                        product.brand = req.body.brand;
+                        product.amount = req.body.amount;
+                        product.save();
+                        res.redirect('product/detail',
+                            {
+                                product: product,
+                                message: 'You changed name, price, brand and amount successfully',
+                            });
+                    } else {
+                        product.name = req.body.name;
+                        product.price = req.body.price;
+                        product.brand = req.body.brand;
+                        product.amount = req.body.amount;
+                        product.descript = req.body.descript;
+                        product.save();
+                        res.redirect('product/detail',
+                            {
+                                product: product,
+                                message: 'You changed price, brand, amount and descript successfully',
+                            });
+                    }
+                }
+            }
+        }
+    }    
+
 }

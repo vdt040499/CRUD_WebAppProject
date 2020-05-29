@@ -1,4 +1,7 @@
 const fs = require('fs');
+const bcrypt = require('bcryptjs');
+
+const User = require('../models/user.model');
 
 module.exports.contact = (req, res) => {
     res.render('user/contact');
@@ -22,4 +25,69 @@ module.exports.postContact = (req, res) => {
     fs.writeFileSync('contact.txt', data);
 
     res.redirect('/users/contact');
+}
+
+module.exports.signup = (req, res) => {
+    res.render('user/signup');
+}
+
+module.exports.signupPost = async(req, res) => {
+    let errors = [];
+    const user = await User.find({ email: req.body.email });
+    if(user.length > 0){
+        errors.push('Mail exist');
+        res.render('user/signup', {
+            errors: errors,
+            values: req.body
+        });
+        return;
+    }else{
+        const hashedPassword = await bcrypt.hash(req.body.password, 10);
+        const user = new User({
+            username: req.body.username,
+            name: req.body.name,
+            email: req.body.email,
+            password: hashedPassword,
+            phone: req.body.phone
+        });
+
+        await user.save();
+
+        res.render('user/profile', {
+            errors: errors
+        });
+    }   
+}
+
+module.exports.login = async(req, res) => {
+    res.render('user/login');
+}
+
+module.exports.loginPost = async(req, res) => {
+    let errors = [];
+
+    const user = await User.findOne({ email: req.body.email });
+
+    if(!user){
+        errors.push('Tài khoản này không tồn tại');
+        res.render('user/login', {
+            errors: errors,
+            values: req.body
+        })
+    }else{
+        const passValid = bcrypt.compare(req.body.password, user.password);
+        if(!passValid){
+            errors.push('Mật khẩu không khớp');
+            res.render('user/login', {
+                errors: errors,
+                values: req.body
+            });
+        }
+
+        res.cookie('cookie', user._id, {
+            signed: true
+        })
+
+        res.render('user/profile');
+    }
 }

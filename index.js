@@ -1,8 +1,13 @@
 const express = require('express');
 const app = express();
+const cookieParser = require('cookie-parser'); 
+const methodOverride = require('method-override');
 var expressHbs =  require('express-handlebars');
 const Handlebars = require('handlebars');
-Handlebars.registerHelper('ternary', require('handlebars-helper-ternary'));
+// Handlebars.registerHelper('ternary', require('handlebars-helper-ternary'));
+Handlebars.registerHelper('ternary', function(cond, v1, v2) {
+    return cond ? v1 : v2;
+ });
 const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-access');
 
 const fs = require('fs');
@@ -33,6 +38,8 @@ app.engine('.hbs', expressHbs({
 app.use('/public', express.static('public'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser(process.env.secret));
+app.use(methodOverride('_method'));
 // var data = fs.readFileSync('./Products.txt', 'utf8');
 
 // var plitedProductString = data.split('\r\n');

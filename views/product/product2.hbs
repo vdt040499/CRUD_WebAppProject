@@ -52,7 +52,9 @@
                     <div class="action d-flex justify-content-center align-items-center">
                         <a href="/products/edit/{{this._id}}" class="btn btn-primary mr-1">Edit</a>
                         <a href="{{this._id}}" class="btn btn-outline-primary mr-1">Details</a>
-                        <a href="#" class="btn btn-danger">Delete</a>
+                        <form action="/products/delete/{{this._id}}?_method=DELETE" method="POST">
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
                     </div> 
                 </td>   
             </tr>

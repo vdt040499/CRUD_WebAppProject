@@ -2,14 +2,11 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-    font-size: 10px;
 }
 h4{
+    text-align: center;
     margin-top: 10px;
-}
-img{
-    width: 50px;
-    height: 50px;
+    margin-bottom: 10px;
 }
 .form-control{
     margin-top: 10px;
@@ -23,40 +20,6 @@ p {
 .email-web{
     margin-top: 30px;
     margin-bottom: 20px;
-}
-
-.status, .price, .brand, .id, th{
-    text-align: center;
-}
-
-.oos_status{
-    color: red;
-}
-
-.product-name{
-    color: #a81c31
-}
-
-.price, .status{
-    font-weight: bold;
-}
-
-.action{
-    height: 50px;
-}
-
-.detail{
-    height: 500px;
-}
-
-.detail-image{
-    height: 100px;
-    width: 100px;
-    object-fit: contain;
-}
-
-.product-infor{
-    line-height: 20px;
 }
 
 label {

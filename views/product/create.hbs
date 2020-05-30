@@ -8,44 +8,45 @@
 
 <form action="/products/create" class="needs-validation" method="POST" enctype="multipart/form-data" novalidate>
     <div class="col-md row">
-        <label class="col-sm-2 col-form-label" for="validationCustom01">Id</label>
+        <label class="col-sm-2 col-form-label" for="id">Id</label>
         <div class="col-sm-10">
-            <input type="text" name="id" class="form-control" id="validationCustom01" required>
+            <input type="text" name="id" class="form-control" id="id" required>
         </div>
     </div>
     <div class="col-md row">
-        <label class="col-sm-2 col-form-label" for="validationCustom02">Title:</label>
+        <label class="col-sm-2 col-form-label" for="name">Title</label>
         <div class="col-sm-10">
-            <input type="text" name="name" class="form-control" id="validationCustom02" value="" required>
+            <input type="text" name="name" class="form-control" id="name" value="" required>
         </div>
     </div>
     <div class="col-md row">
-        <label class="col-sm-2 col-form-label" for="validationCustom03">Summary:</label>
+        <label class="col-sm-2 col-form-label" for="description">Summary</label>
         <div class="col-sm-10">
-            <input type="text" name="description" class="form-control" id="validationCustom03" value="" required>
+            <input type="text" name="description" class="form-control" id="description" value="" required>
         </div>
     </div>
 
     <div class="col-md row">
-        <label class="col-sm-2 col-form-label" for="validationCustom04">ImageUrl</label>
+        <label class="col-sm-2 col-form-label" for="image">ImageUrl</label>
         <div class="col-sm-10">
-            <input style="margin-top: 10px;" name="image" class="form-control-file" type="file" id="validationCustom04"
+            <input style="margin-top: 10px;" name="image" class="form-control-file" type="file" id="image"
                 accept="image/*">
         </div>
     </div>
 
     <div class="col-md row">
-        <label class="col-sm-2 col-form-label" for="validationCustom05">Price :</label>
+        <label class="col-sm-2 col-form-label" for="price">Price</label>
         <div class="col-sm-10">
-            <input type="number" name="price" class="form-control" id="validationCustom05" value="" required>
+            <input type="number" name="price" class="form-control" id="price" value="" required>
         </div>
     </div>
 
     <div class="col-md row">
-        <label class="col-sm-2 col-form-label" for="validationCustom06">Number :</label>
+        <label class="col-sm-2 col-form-label" for="amount">Number</label>
         <div class="col-sm-10">
-            <input type="number" name="amount" class="form-control" id="validationCustom06" value="" required>
+            <input type="number" name="amount" class="form-control" id="amount" value="" required>
             <button style="margin-top: 20px; text-align: center;" class="btn btn-primary" type="submit">Submit</button>
         </div>
     </div>
 </form>
+<script src="../../public/script/create-product.js"></script>

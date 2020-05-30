@@ -1,10 +1,19 @@
 <h3>Detail</h3>
+
+{{#each message}}
+<div class="alert alert-primary alert-dismissible">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>{{this}}</strong>
+</div>
+{{/each}}
+
 {{#if product}}
 <div class="d-flex justify-content-center align-items-center detail">
     <div class="d-flex align-items-center">
     <img src="/{{product.image}}" alt="product_image" class="col-md-6 detail-image">
     <div class="col-md-6 product-infor">
         <h4>{{product.name}}</h4>
+        <h5>{{product.brand}}</h5>
         <p>{{product.description}}</p>
         <h5>{{product.price}}</h5>
         {{#if product.amount}}

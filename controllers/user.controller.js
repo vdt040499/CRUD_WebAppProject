@@ -75,19 +75,30 @@ module.exports.loginPost = async(req, res) => {
             values: req.body
         })
     }else{
-        const passValid = bcrypt.compare(req.body.password, user.password);
-        if(!passValid){
-            errors.push('Mật khẩu không khớp');
+        const passwordValid = await bcrypt.compare(
+            req.body.password,
+            user.password
+          );
+        if(!passwordValid){
+            errors.push('Sai mật khẩu');
             res.render('user/login', {
                 errors: errors,
                 values: req.body
             });
+            return;
         }
 
         res.cookie('cookie', user._id, {
             signed: true
         })
 
-        res.render('user/profile');
+        res.redirect("/users/profile/" + user._id);
     }
+}
+
+module.exports.profile = async(req, res) => {
+    const user = await User.findById(req.params.userId);
+    res.render('user/profile', {
+        user: user
+    });
 }

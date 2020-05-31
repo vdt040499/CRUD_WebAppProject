@@ -1,5 +1,8 @@
 <h3>My profile</h3>
-{{#if }}
+{{#if user}}
 <div>
-    <h4>{</h4>
+    <h4>{{user.name}}</h4>
+    <p>{{user.email}}</p>
+    <p>{{user.phone}}</p>
 </div>
+{{/if}}

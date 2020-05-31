@@ -23,9 +23,9 @@
     <form action="/users/login" method="POST">
         <div class="form-group row">
             <div class="col-md">
-                <input type="email" name="email" class="form-control" id="validationCustom01" placeholder="Email"
-                    value="" required>
-                <input type="password" name="password" class="form-control" id="validationCustom02"
+                <input type="email" name="email" class="form-control" id="email" placeholder="Email"
+                    {{#if values}} value={{values.email}} {{else}} value="" {{/if}} required>
+                <input type="password" name="password" class="form-control" id="password"
                     placeholder="Password" value="" required>
                 <button type="submit" style="margin-top: 10px; margin-bottom: 10px;"
                     class="btn btn-success btn-lg btn-block">

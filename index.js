@@ -5,9 +5,9 @@ const methodOverride = require('method-override');
 var expressHbs =  require('express-handlebars');
 const Handlebars = require('handlebars');
 // Handlebars.registerHelper('ternary', require('handlebars-helper-ternary'));
-Handlebars.registerHelper('ternary', function(cond, v1, v2) {
-    return cond ? v1 : v2;
- });
+// Handlebars.registerHelper('ternary', function(cond, v1, v2) {
+//     return cond ? v1 : v2;
+//  });
 const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-access');
 
 const fs = require('fs');

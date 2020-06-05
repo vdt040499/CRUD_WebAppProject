@@ -1,9 +1,16 @@
 $(document).ready(function () {
+    jQuery.validator.addMethod('customphone', function (value, element) {
+        return this.optional(element) || /([0-9]{10})|(\([0-9]{3}\)\s+[0-9]{3}\-[0-9]{4})/.test(value);
+    }, "Vui lòng nhập số điện thoại hợp lệ");
+
     $(".needs-validation").validate({
         rules:{
             username :{
                 required: true,
                 minlength :4,
+            },
+            name: {
+                required: true
             },
             email :{
                 required :true,
@@ -18,17 +25,21 @@ $(document).ready(function () {
                 equalTo : "#password"
             },
             phone :{
-                minlength : 10,
+                required: true,
+                customphone: true
             },
         },
 
         messages : {
             username : {
-                required : "Vui lòng nhập tên đăng nhập.",
+                required : "Vui lòng nhập tên đăng nhập",
                 minlength : "Username quá ngắn"
             },
+            name: {
+                required: "Vui lòng nhập tên"
+            },
             phone:{
-                minlength : "Số điện thoại không phù hợp",
+                required : "Vui lòng nhập số điện thoại",
             },
 
             email:{

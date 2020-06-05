@@ -37,7 +37,7 @@ module.exports.signupPost = async(req, res) => {
     let errors = [];
     const user = await User.find({ email: req.body.email });
     if(user.length > 0){
-        errors.push('Mail exist');
+        errors.push('Email đã tồn tại! Vui lòng nhập email khác');
         res.render('user/signup', {
             errors: errors,
             values: req.body
@@ -55,8 +55,8 @@ module.exports.signupPost = async(req, res) => {
 
         await user.save();
 
-        res.render('user/profile', {
-            errors: errors
+        res.render('user/login', {
+            message: "Tạo tài khoản thành công"
         });
     }   
 }

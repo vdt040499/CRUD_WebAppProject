@@ -12,11 +12,20 @@ $(document).ready(function () {
                 required : true,
                 minlength : 10
             },
+
+            image : {
+                required: true, 
+                // extension: "png|jpe?g|gif", 
+                // filesize: 1048576
+            },
+
             price : {
                 required : true,
+                number: true
             },
             amount :{
                 required : true,
+                number: true
             },
         },
 
@@ -29,17 +38,23 @@ $(document).ready(function () {
                 minlength : "Vui lòng nhập tên sản phẩm nhiều hơn 3 kí tự"
             },
 
+            image: {
+                required: "Vui lòng chọn một ảnh",
+            },
+
             description:{
                 required :"Vui lòng nhập mô tả sản phẩm",
                 minlength: "Vui lòng nhập mô tả nhiều hơn 10 kí tự"
             },
 
             price: {
-                required : "Vui lòng nhập giá sản phẩm"
+                required : "Vui lòng nhập giá sản phẩm",
+                number: "Giá sản phẩm phải là kiểu số"
             },
             
             amount: {
-                required : "Vui lòng nhập số lượng sản phẩm"
+                required : "Vui lòng nhập số lượng sản phẩm",
+                number: "Số lượng sản phẩm phải là kiểu số"
             },
         }
     })

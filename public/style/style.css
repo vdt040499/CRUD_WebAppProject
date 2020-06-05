@@ -75,3 +75,8 @@ h6{
 .col-sm-2 {
     font-weight: bold;
 }
+
+.current{
+    background-color: rgb(73, 70, 70);
+    color: cornsilk;
+}

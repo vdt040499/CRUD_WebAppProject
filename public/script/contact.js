@@ -1,4 +1,9 @@
+
 $(document).ready(function () {
+    jQuery.validator.addMethod('customphone', function (value, element) {
+        return this.optional(element) || /([0-9]{10})|(\([0-9]{3}\)\s+[0-9]{3}\-[0-9]{4})/.test(value);
+    }, "Vui lòng nhập số điện thoại hợp lệ");
+
     $(".needs-validation").validate({
         rules:{
             name :{
@@ -9,6 +14,7 @@ $(document).ready(function () {
             },
             phone: {
                 required : true,
+                customphone: true
             },
             message : {
                 required : true,

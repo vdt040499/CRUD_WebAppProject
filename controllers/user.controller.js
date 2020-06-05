@@ -24,7 +24,9 @@ module.exports.postContact = (req, res) => {
 
     fs.writeFileSync('contact.txt', data);
 
-    res.redirect('/users/contact');
+    res.render('user/contact', {
+        message: "Chúng tôi đã tiếp nhận yêu cầu!"
+    });
 }
 
 module.exports.signup = (req, res) => {
